@@ -1,0 +1,578 @@
+
+#root {
+  min-height: 100vh;
+}
+
+.love-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #fff1f2, #fce7f3, #ede9fe);
+}
+
+.love-card {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 480px;
+  padding: 48px 28px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid #ffe4e6;
+  border-radius: 28px;
+  box-shadow: 0 20px 60px rgba(190, 100, 130, 0.12);
+  color: #75465c;
+}
+
+.heart {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.love-card h1 {
+  font-size: clamp(25px, 5vw, 36px);
+  margin: 0;
+  color: #be567e;
+}
+
+.subtitle {
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.divider {
+  margin: 28px 0;
+  color: #f9a8d4;
+  letter-spacing: 8px;
+}
+
+.description {
+  font-size: 17px;
+}
+
+.days {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.number {
+  font-size: clamp(72px, 16vw, 110px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ec4899;
+}
+
+.unit {
+  font-size: 24px;
+}
+
+.date {
+  font-size: 14px;
+  color: #a17c8c;
+}
+
+.message {
+  margin-top: 32px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+/* 日夜主题 */
+
+.love-page {
+  position: relative;
+  transition: background 0.6s ease;
+}
+
+.theme-day {
+  background: linear-gradient(
+    135deg,
+    #fff1f2,
+    #fce7f3,
+    #ede9fe
+  );
+}
+
+.love-page[data-theme="night"] {
+  background: radial-gradient(
+    ellipse at top,
+    #34305e 0%,
+    #191633 48%,
+    #090d1e 100%
+  );
+}
+
+.love-page[data-theme="night"] .love-card {
+  background: rgba(28, 27, 54, 0.9);
+  border-color: rgba(194, 174, 255, 0.25);
+  color: #f5dff5;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.3);
+}
+
+.love-page[data-theme="night"] .love-card h1 {
+  color: #f4b9e5;
+}
+
+.love-page[data-theme="night"] .number {
+  color: #f6a6db;
+}
+
+.love-page[data-theme="night"] .date {
+  color: #c9b8db;
+}
+
+.love-page[data-theme="night"] .divider {
+  color: #c7a7ff;
+}
+
+.theme-switcher {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.theme-switcher button {
+  padding: 10px 14px;
+  border: 1px solid rgba(180, 130, 170, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #784c69;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.theme-switcher button:hover {
+  transform: translateY(-2px);
+}
+
+.theme-switcher button[aria-pressed="true"] {
+  background: #e879ae;
+  color: white;
+}
+
+@media (max-width: 480px) {
+  .theme-switcher {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+  }
+
+  .love-page {
+    padding-top: 90px;
+  }
+}
+
+/* ===== 夜晚动态星空 ===== */
+
+.love-page[data-theme="night"] {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 第一层：细小星星 */
+.love-page[data-theme="night"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, white 99%, transparent),
+    radial-gradient(2px 2px at 25% 70%, white 99%, transparent),
+    radial-gradient(3px 3px at 40% 15%, #ffd6f5 99%, transparent),
+    radial-gradient(2px 2px at 60% 35%, white 99%, transparent),
+    radial-gradient(3px 3px at 75% 80%, #c4b5fd 99%, transparent),
+    radial-gradient(2px 2px at 90% 25%, white 99%, transparent),
+    radial-gradient(2px 2px at 15% 85%, white 99%, transparent),
+    radial-gradient(3px 3px at 85% 55%, #fbcfe8 99%, transparent);
+
+  background-size: 100% 100%;
+  opacity: 0.75;
+
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+/* 星星闪烁动画 */
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 保证卡片位于星空上方 */
+.love-page[data-theme="night"] .love-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* 保持主题按钮在右上角 */
+.love-page[data-theme="night"] .theme-switcher {
+  position: absolute;
+  z-index: 2;
+}
+
+/* 尊重系统减少动态效果设置 */
+@media (prefers-reduced-motion: reduce) {
+  .love-page[data-theme="night"]::before {
+    animation: none;
+  }
+}
+
+/* ===== 夜晚流星动画 ===== */
+
+.love-page[data-theme="night"]::after {
+  content: "";
+  position: absolute;
+
+  top: 12%;
+  left: 85%;
+
+  width: 140px;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(244, 180, 255, 0.5),
+    #ffffff
+  );
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 8px rgba(244, 180, 255, 0.6),
+    0 0 18px rgba(190, 140, 255, 0.3);
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  transform: rotate(-30deg);
+
+  animation: shootingStar 9s ease-in infinite;
+}
+
+@keyframes shootingStar {
+  0%, 65% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-30deg);
+  }
+
+  68% {
+    opacity: 1;
+  }
+
+  78% {
+    opacity: 0;
+    transform: translate(-380px, 220px) rotate(-30deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-380px, 220px) rotate(-30deg);
+  }
+}
+
+/* 减少动态效果时关闭流星动画 */
+@media (prefers-reduced-motion: reduce) {
+  .love-page[data-theme="night"]::after {
+    animation: none;
+  }
+}
+
+/* ===== 白天漂浮爱心 ===== */
+
+.love-page[data-theme="day"] {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 使用爱心符号制作漂浮动画 */
+.love-page[data-theme="day"]::after {
+  content: "♡   ♥   ♡   ♥   ♡";
+
+  position: absolute;
+  bottom: -80px;
+  left: 10%;
+
+  width: 80%;
+  text-align: center;
+
+  font-size: 32px;
+  letter-spacing: 45px;
+  color: #f9a8d4;
+
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+
+  animation: none;
+display: none;
+}
+
+@keyframes floatingHearts {
+  0% {
+    transform: translateY(0) rotate(-8deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.65;
+  }
+
+  85% {
+    opacity: 0.65;
+  }
+
+  100% {
+    transform: translateY(-90vh) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* 保证卡片和按钮位于爱心上方 */
+.theme-day .love-card {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-day .theme-switcher {
+  position: absolute;
+  z-index: 2;
+}
+
+/* 尊重系统减少动态效果设置 */
+@media (prefers-reduced-motion: reduce) {
+  .theme-day::after {
+    animation: none;
+  }
+}
+
+
+/* 首页内容布局 */
+.home-page {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 32px;
+  padding: 24px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.home-page h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.home-page p {
+  font-size: 14px;
+  line-height: 1.8;
+  opacity: 0.8;
+}
+
+
+
+/* 首页文字适配昼夜主题 */
+.love-page[data-theme="night"] .home-page {
+  color: #f8e8ff;
+}
+
+.love-page[data-theme="day"] .home-page {
+  color: #75465c;
+}
+
+
+/* 白天模式：卡片两侧的爱心 */
+.love-page[data-theme="day"] .love-card::before,
+.love-page[data-theme="day"] .love-card::after {
+  position: absolute;
+  top: 50%;
+  font-size: 28px;
+  color: #ee91bc;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* 左侧爱心 */
+.love-page[data-theme="day"] .love-card::before {
+  content: "♡  ♥  ♡";
+  right: calc(100% + 20px);
+  transform: translateY(-50%);
+}
+
+/* 右侧爱心 */
+.love-page[data-theme="day"] .love-card::after {
+  content: "♡  ♥  ♡";
+  left: calc(100% + 20px);
+  transform: translateY(-50%);
+}
+
+
+/* 卡片左右爱心的漂浮动画 */
+@keyframes cardHeartFloat {
+  0%, 100% {
+    transform: translateY(-50%) translateX(0);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 25px)) translateX(8px);
+    opacity: 1;
+  }
+}
+
+/* 左侧爱心 */
+.love-page[data-theme="day"] .love-card::before {
+  animation: cardHeartFloat 5s ease-in-out infinite;
+}
+
+/* 右侧爱心 */
+.love-page[data-theme="day"] .love-card::after {
+  animation: cardHeartFloat 6s ease-in-out infinite reverse;
+}
+
+/* 手机侧边仅有 24px：三颗爱心竖排，并避免横向漂移越出视口。 */
+@media (max-width: 480px) {
+  .love-page[data-theme="day"] .love-card::before,
+  .love-page[data-theme="day"] .love-card::after {
+    content: "♡\a♥\a♡";
+    width: 18px;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    white-space: pre;
+    animation-name: mobileCardHeartFloat;
+  }
+
+  .love-page[data-theme="day"] .love-card::before {
+    right: calc(100% + 3px);
+  }
+
+  .love-page[data-theme="day"] .love-card::after {
+    left: calc(100% + 3px);
+  }
+}
+
+@keyframes mobileCardHeartFloat {
+  0%, 100% {
+    transform: translateY(-50%);
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 25px));
+    opacity: 1;
+  }
+}
+
+/* 尊重系统减少动画设置 */
+@media (prefers-reduced-motion: reduce) {
+  .love-page[data-theme="day"] .love-card::before,
+  .love-page[data-theme="day"] .love-card::after {
+    animation: none;
+  }
+}
+
+
+
+/* ===== 白天模式：全屏漂浮爱心 ===== */
+
+.love-page {
+  position: relative;
+  isolation: isolate;
+}
+
+/* 爱心动画容器 */
+.floating-hearts {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 100vh;
+  --heart-travel: calc(-100vh - 80px);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 容器和动画使用同一视口高度；额外距离让爱心完整离开顶部。 */
+@supports (height: 100dvh) {
+  .floating-hearts {
+    height: 100dvh;
+    --heart-travel: calc(-100dvh - 80px);
+  }
+}
+
+/* 每颗独立爱心 */
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  color: #e879ad;
+  opacity: 0;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  animation-name: heartRise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+/* 爱心上升动画 */
+@keyframes heartRise {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(-12deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.65;
+  }
+
+  80% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: translate3d(25px, var(--heart-travel), 0) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+/* 夜间模式隐藏爱心 */
+.love-page[data-theme="night"] .floating-hearts {
+  display: none;
+}
+
+/* 页面内容保持在爱心上方 */
+.love-page > .home-page,
+.love-page > .love-card {
+  position: relative;
+  z-index: 1;
+}
+
+.love-page > .theme-switcher {
+  z-index: 10;
+}
+
+/* 尊重系统减少动画设置 */
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart {
+    animation: none;
+    display: none;
+  }
+}
